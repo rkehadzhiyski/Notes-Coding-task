@@ -1,6 +1,11 @@
-const Home = () =>{
-    return(
-        <h1>Hello Home page</h1>
+import CreateNote from "./CreateNote";
+
+const Home = () => {
+    return (
+        <>
+            <h1>Hello Home page</h1>
+            <CreateNote />
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ const notes = [];
 router.post('/', async (req, res) => {
     try {
         notes.push(req.body);
+        console.log(notes)
     } catch (error) {
         console.log(error)
         res.status(400).json({
