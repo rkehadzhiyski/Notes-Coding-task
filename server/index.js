@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
 
 const notes = [];
 
+function getAllNotes() {
+    return notes;
+}
+
 app.post('/notes/create', async (req, res) => {
     try {
         const { noteTitle, noteContent } = req.body;
@@ -28,10 +32,21 @@ app.post('/notes/create', async (req, res) => {
         res.status(201).json(newNote);
         console.log(notes);
     } catch (error) {
-        console.log(error)
+        console.error('Error while creating note:', error);
         res.status(400).json({
             message: 'Cannot create Note'
         });
+    }
+});
+
+app.get('/notes/all-notes', async (req, res) => {
+    try {
+        const allNotes = getAllNotes(); 
+
+        res.json(allNotes);
+    } catch (error) {
+        console.error('Error fetching notes:', error);
+        res.status(500).json({ error: 'An error occurred while fetching notes' });
     }
 });
 
