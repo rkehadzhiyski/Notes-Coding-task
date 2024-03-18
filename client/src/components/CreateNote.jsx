@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-
 const CreateNote = () => {
     const schema = yup.object().shape({
         noteTitle: yup.string().required('Title is required'),
