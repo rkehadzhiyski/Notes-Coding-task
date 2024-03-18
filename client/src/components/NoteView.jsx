@@ -106,11 +106,11 @@ const NoteView = () => {
                     <Button variant="primary" type="submit">
                         Edit
                     </Button>
-                    <Button variant="danger" onClick={handleDelete}>
+                    <Button variant="danger" onClick={handleDelete}> 
                         Delete
                     </Button>
                 </div>
-            </Form>
+            </Form>            
         </div>
     )
 }
