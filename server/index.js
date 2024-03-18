@@ -17,10 +17,6 @@ app.get('/', (req, res) => {
 
 const notes = [];
 
-function getAllNotes() {
-    return notes;
-}
-
 app.post('/notes/create', async (req, res) => {
     try {
         const { noteTitle, noteContent } = req.body;
@@ -40,10 +36,8 @@ app.post('/notes/create', async (req, res) => {
 });
 
 app.get('/notes/all-notes', async (req, res) => {
-    try {
-        const allNotes = getAllNotes(); 
-
-        res.json(allNotes);
+    try {        
+        res.json(notes);
     } catch (error) {
         console.error('Error fetching notes:', error);
         res.status(500).json({ error: 'An error occurred while fetching notes' });
