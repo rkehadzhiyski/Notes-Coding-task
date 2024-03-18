@@ -1,6 +1,7 @@
 const express = require('express');
 const router = require('express').Router();
 const cors = require('cors');
+const uuid = require('uuid');
 
 const app = express();
 
@@ -18,8 +19,14 @@ const notes = [];
 
 app.post('/notes/create', async (req, res) => {
     try {
-        notes.push(req.body);
-        console.log(notes)
+        const { noteTitle, noteContent } = req.body;
+        const id = uuid.v4();
+
+        const newNote = { id, noteTitle, noteContent };
+
+        notes.push(newNote);
+        res.status(201).json(newNote);
+        console.log(notes);
     } catch (error) {
         console.log(error)
         res.status(400).json({
