@@ -5,7 +5,7 @@ Follow these steps to set up and run the project locally:
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/rkehadzhiyski/Notes-Coding-task
 ```
 
 ## 2. Run the Server
