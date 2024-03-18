@@ -5,6 +5,7 @@ import styles from './myNotes.module.css';
 
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
+import { getNotes } from "../api/notes";
 
 const MyNotes = () => {
     const navigate = useNavigate();
@@ -12,16 +13,8 @@ const MyNotes = () => {
 
     useEffect(() => {
         const fetchNotes = async () => {
-            try {
-                const response = await fetch('http://localhost:8888/notes/all-notes');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch notes');
-                }
-                const data = await response.json();
-                setNotes(data);
-            } catch (error) {
-                console.error('Error fetching notes:', error.message);
-            }
+            const data = await getNotes();
+            setNotes(data);
         };
 
         fetchNotes();

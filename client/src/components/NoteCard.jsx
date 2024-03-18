@@ -10,7 +10,7 @@ const NoteCard = (data) => {
     };
 
     return (
-        <Card style={{ width: '18rem', height: '14rem' }} onClick={handleClick}>
+        <Card style={{ width: '18rem', height: '14rem', cursor: 'pointer' }} onClick={handleClick}>
             <Card.Body>
                 <Card.Title>{data.data.noteTitle}</Card.Title>
                 <Card.Text>{data.data.noteContent}</Card.Text>

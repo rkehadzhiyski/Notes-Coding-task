@@ -6,6 +6,7 @@ import styles from './createNote.module.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { createNote } from '../api/notes';
 
 const CreateNote = () => {
     const navigate = useNavigate();
@@ -19,25 +20,10 @@ const CreateNote = () => {
     });
 
     const onSubmit = async (data) => {
-        try {
-            const response = await fetch('http://localhost:8888/notes/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to submit the note');
-            }
-
-            console.log('Note submitted successfully');
-            reset();
-            navigate('/my-notes');
-        } catch (error) {
-            console.error('Error submitting the note:', error.message);
-        }
+        await createNote(data);
+        console.log('Note submitted successfully');
+        reset();
+        navigate('/my-notes');
     };
 
     return (

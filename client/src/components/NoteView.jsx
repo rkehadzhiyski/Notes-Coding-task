@@ -8,6 +8,7 @@ import styles from './noteView.module.css';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { deleteNote, getNote, updateNote } from '../api/notes';
 
 const NoteView = () => {
     const navigate = useNavigate();
@@ -24,57 +25,20 @@ const NoteView = () => {
 
     useEffect(() => {
         const fetchNote = async () => {
-            try {
-                const response = await fetch(`http://localhost:8888/note/${noteId}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch note');
-                }
-                const data = await response.json();
-                setValue('noteTitle', data.noteTitle);
-                setValue('noteContent', data.noteContent);
-            } catch (error) {
-                console.error('Error fetching note:', error.message);
-            }
-        };
-
+            const data = await getNote(noteId);
+            setValue('noteTitle', data.noteTitle);
+            setValue('noteContent', data.noteContent);
+        }
         fetchNote();
     }, [noteId, setValue]);
 
     const onSubmit = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:8888/note/${noteId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to edit the note');
-            }
-
-            console.log('Note edited successfully');
-        } catch (error) {
-            console.error('Error editing the note:', error.message);
-        }
+        await updateNote(data, noteId);
     };
 
     const handleDelete = async () => {
-        try {
-            const response = await fetch(`http://localhost:8888/note/${noteId}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to delete the note');
-            }
-
-            console.log('Note deleted successfully');
-            navigate('/my-notes');
-        } catch (error) {
-            console.error('Error deleting the note:', error.message);
-        }
+        await deleteNote(noteId);
+        navigate('/my-notes');
     }
 
     return (
@@ -106,11 +70,11 @@ const NoteView = () => {
                     <Button variant="primary" type="submit">
                         Edit
                     </Button>
-                    <Button variant="danger" onClick={handleDelete}> 
+                    <Button variant="danger" onClick={handleDelete}>
                         Delete
                     </Button>
                 </div>
-            </Form>            
+            </Form>
         </div>
     )
 }
