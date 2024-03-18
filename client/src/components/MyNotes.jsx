@@ -26,7 +26,7 @@ const MyNotes = () => {
             <h1>My notes</h1>
             {notes && 
                 notes.map(note => (
-                    <NodeCard key={note.id} data={note}/> 
+                    <NodeCard key={note.id} data={note} onClick/>
                 ))
             }           
         </>
