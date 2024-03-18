@@ -51,5 +51,3 @@ npm run dev
 ## 4. Access the Application
 
 Open your web browser and go to [localhost:5173](http://localhost:5173/) to view the application.
-
-Feel free to explore and modify the codebase as needed! If you encounter any issues, refer to the project documentation or seek assistance from the project maintainers.
