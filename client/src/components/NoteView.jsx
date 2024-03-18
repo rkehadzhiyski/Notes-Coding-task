@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 const NoteView = () => {
+    const navigate = useNavigate();
     const { noteId } = useParams();
 
     const schema = yup.object().shape({
@@ -57,8 +58,21 @@ const NoteView = () => {
         }
     };
 
-    const handleDelete = () =>{
-        
+    const handleDelete = async() =>{
+        try {
+            const response = await fetch(`http://localhost:8888/note/${noteId}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete the note');
+            }
+
+            console.log('Note deleted successfully');
+            navigate('/my-notes');
+        } catch (error) {
+            console.error('Error deleting the note:', error.message);
+        }
     }
 
     return (

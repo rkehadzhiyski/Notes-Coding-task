@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('RESTful service');
 });
 
-const notes = [];
+let notes = [];
 
 function updateNoteById(id, updatedNoteData) {
     const index = notes.findIndex(note => note.id === id);
@@ -23,6 +23,17 @@ function updateNoteById(id, updatedNoteData) {
     if (index !== -1) {
         notes[index] = { ...notes[index], ...updatedNoteData };
         return notes[index];
+    }
+
+    return null;
+}
+
+function deleteNoteById(id) {
+    const initialLength = notes.length;
+    notes = notes.filter(note => note.id !== id);
+
+    if (notes.length !== initialLength) {
+        return { id }; 
     }
 
     return null;
@@ -87,6 +98,23 @@ app.post('/note/:noteId', async (req, res) => {
     } catch (error) {
         console.error('Error updating note:', error);
         res.status(500).json({ error: 'An error occurred while updating the note' });
+    }
+});
+
+app.delete('/note/:noteId', (req, res) => {
+    const noteId = req.params.noteId; 
+
+    try {
+        const deletedNote = deleteNoteById(noteId);
+
+        if (!deletedNote) {
+            return res.status(404).json({ error: 'Note not found' });
+        }
+
+        res.json({ message: 'Note deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting note:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the note' });
     }
 });
 
