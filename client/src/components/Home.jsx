@@ -1,11 +1,12 @@
 import CreateNote from "./CreateNote";
+import styles from './home.module.css';
 
 const Home = () => {
     return (
-        <>
-            <h1>Hello Home page</h1>
+        <div className={styles['main-container']}>
+            <h1>Create a note</h1>
             <CreateNote />
-        </>
+        </div>
     )
 }
 

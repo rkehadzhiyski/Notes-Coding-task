@@ -1,0 +1,15 @@
+.form-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 7em;
+}
+
+.form{
+    width: 30em;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

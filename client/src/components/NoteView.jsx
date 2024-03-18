@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import styles from './noteView.module.css';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -21,7 +23,7 @@ const NoteView = () => {
     });
 
     useEffect(() => {
-        const fetchNotes = async () => {
+        const fetchNote = async () => {
             try {
                 const response = await fetch(`http://localhost:8888/note/${noteId}`);
                 if (!response.ok) {
@@ -35,7 +37,7 @@ const NoteView = () => {
             }
         };
 
-        fetchNotes();
+        fetchNote();
     }, [noteId, setValue]);
 
     const onSubmit = async (data) => {
@@ -58,7 +60,7 @@ const NoteView = () => {
         }
     };
 
-    const handleDelete = async() =>{
+    const handleDelete = async () => {
         try {
             const response = await fetch(`http://localhost:8888/note/${noteId}`, {
                 method: 'DELETE',
@@ -76,36 +78,40 @@ const NoteView = () => {
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Note Title</Form.Label>
-                <Form.Control
-                    type="noteTitle"
-                    {...register('noteTitle')}
-                    placeholder="Enter a title"
-                    autoComplete="name-input"
-                />
-                <Form.Text className="text-danger">{errors['noteTitle']?.message}</Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Note text</Form.Label>
-                <Form.Control
-                    style={{ height: '150px' }}
-                    as={'textarea'}
-                    type="text"
-                    {...register('noteContent')}
-                    placeholder="Enter note"
-                    autoComplete="description"
-                />
-                <Form.Text className="text-danger">{errors['noteContent']?.message}</Form.Text>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Edit
-            </Button>
-            <Button variant="danger" onClick={handleDelete}>
-                Delete
-            </Button>
-        </Form>
+        <div className={styles['form-container']}>
+            <Form onSubmit={handleSubmit(onSubmit)} className={styles['form']}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Note Title</Form.Label>
+                    <Form.Control
+                        type="noteTitle"
+                        {...register('noteTitle')}
+                        placeholder="Enter a title"
+                        autoComplete="name-input"
+                    />
+                    <Form.Text className="text-danger">{errors['noteTitle']?.message}</Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Note text</Form.Label>
+                    <Form.Control
+                        style={{ height: '150px' }}
+                        as={'textarea'}
+                        type="text"
+                        {...register('noteContent')}
+                        placeholder="Enter note"
+                        autoComplete="description"
+                    />
+                    <Form.Text className="text-danger">{errors['noteContent']?.message}</Form.Text>
+                </Form.Group>
+                <div className={styles['buttons-container']}>
+                    <Button variant="primary" type="submit">
+                        Edit
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </div>
+            </Form>
+        </div>
     )
 }
 
